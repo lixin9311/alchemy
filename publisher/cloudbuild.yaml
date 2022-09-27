@@ -1,0 +1,26 @@
+steps:
+  # Deploy source code to GCF
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    args:
+      - gcloud
+      - functions
+      - deploy
+      - ${_FUNCTION_NAME}
+      - --region=${_COMPUTE_ZONE}
+      - --source=./publisher/
+      - --trigger-http
+      - --runtime=${_RUNTIME}
+      - --set-env-vars=API_KEY=${_API_KEY},DEAD_TOPIC=${_DEAD_TOPIC},GCP_PROJECT=${PROJECT_ID}
+      - --entry-point=Publish
+      - --allow-unauthenticated
+      - --ingress-settings=all
+      - --memory=128MB
+      - --max-instances=${_MAX_INSTANCES}
+substitutions:
+  _COMPUTE_ZONE: asia-southeast1
+  _FUNCTION_NAME: publisher-testnet
+  _API_KEY: should-be-overriden
+  _DEAD_TOPIC: publisher-testnet
+  _GOOGLE_CLOUD_PROJECT: runblox-openblox
+  _RUNTIME: go116
+  _MAX_INSTANCES: "100"
