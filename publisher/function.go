@@ -82,7 +82,7 @@ func Publish(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var topic string
-	// for a cloud function, the URL will be like https://asia-southeast1-runblox-openblox.cloudfunctions.net/runblox-transfer/extra-things
+	// for a cloud function, the URL will be like https://asia-southeast1-my-project.cloudfunctions.net/cloud-function/{topic}
 	path := r.URL.Path
 	path = strings.TrimSuffix(strings.TrimPrefix(path, "/"), "/")
 	segs := strings.Split(path, "/")
